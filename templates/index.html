@@ -1,69 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Ip Lookup</title>
-	<meta charset='urf-8'>
-	<meta name="viewport" content="width=device-width, initial-scale=1s">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+	<link rel="shortcut icon" href="./ipico.png">
 
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-
+	<title>IP LOOKUP</title>
 </head>
-<body class='container-fluid'>
-
-	<nav class='row justify-content-center' style='background: #337ab7; color: white'>
-		<h1 class='row justify-content-center'>Ip Lookup</h1>
-	</nav>
-
-	<div class='container mt-3'>
-
-		<center class='row'>
-			<form method="post" class='col-md-6 col-md-offset-3'>
-				<div class='input-group'>
-					<input type="text" class='form-control' name="ip" placeholder="Ip Address">
-					<div class='input-group-btn'>
-						<button class='btn btn-primary ml-2' type="submit">
-							Submit
-						</button>
-					</div>
-				</div>
-			</form>
-		</center>
-
-		<br>
-		<div class='row' style='display: inline'>
-			{% if data.ip and data.country %}
-			<div class='col-md-6 col-md-offset-3'>
-				{% if request.method == 'GET' %}
-					<h3>Your Address: {{ data.ip }}</h3>
-				{% else %}
-					<h3>IP Address: {{ data.ip }}</h3>
-				{% endif %}
-
-				
-				<!-- <img style="display: block"src="https://www.countryflags.io/at/flat/64.png"> -->
-				<h5 style="display: inline">Country: {{ data.country }}</h5> 
-				<img src="https://www.countryflags.io/{{ data.country }}/flat/48.png">
-				<h5><b>Region</b>: {{ data.region }}</h5>
-				<h5><b>City</b>: {{ data.city }}</h5>
-				<h5><b>Organization:</b> {{ data.org }}</h5>
-				<h5><b>Hostname:</b> {{ data.hostname }}</h5>
-				<h5><b>TimeZone:</b> {{ data.timezone }}</h5>
-		
-			</div>
-			{% endif %}
-		</div>
-		<br>
-		<iframe 
-		  width="400"
-		  height="400"
-		  frameborder="10" style="border: 0"
-		  src="https://www.google.com/maps/embed/v1/place?key={{ config.google_key }}&q={{ data.loc }}" allowfullscreen>
-		</iframe>	
+<body>
+	<div class="flex justify-center">
+		<nav class="font-semibold uppercase text-blue-400 leading-10 p-1 text-center">
+			<h1><a href="#" class="border-b hover:text-blue-600">IpLookup</a></h1>
+		</nav>
 	</div>
 
+	<main class="md:grid grid-cols-3 bg-gray-100 p-10">
+		<div class="flex justify-center mb-5">
+			<form method="post">
+				<input type="text" class="p-1 mb-2" name="ip" placeholder="Ip Address">
+				<button type="submit" class="p-1 uppercase bg-blue-300 hover:bg-blue-400 rounded-lg hover:bg-opacity-50 transition ease-in duration-300">Submit</button>
+			</form>
+		</div>
+		
+		<div class="col-span-2 lg:mr-10">
+			<div class="lg:flex justify- bg-white p-4 shadow rounded-md w-full text-ls hover:shadow-lg lg:pb-20 text-xl">
+				{% if data.ip and data.country %}
+				<div class="w-full"> 		
+					{% if request.method == 'GET' %}
+						<span>Your Address: {{ data.ip }}</span>
+					{% else %}
+						<span>Ip Address: {{ data.ip }}</span>
+					{% endif %}
+					<span class="block leading-10">Country: {{ data.country }} </span>
+					<span class="block leading-10">Region: {{ data.region }}</span>
+					<span class="block leading-10">City: {{ data.city }}</span>
+					<span class="block leading-10">Organization: {{ data.org }}</span>
+					<span class="block leading-10">Hostname: {{ data.hostname }}</span>
+					<span class="block leading-10">TimeZone: {{ data.timezone }}</span>
+				</div>
+				<iframe
+					class="w-full"
+					width="300"
+					height="300"
+					frameborder="0" style="border:0"
+					src="https://www.google.com/maps/embed/v1/place?key={{ config.google_key }}
+						&q={{ data.loc }}" allowfullscreen>
+				</iframe>
+				{% endif %}
+			</div>
+				
+		</div>
+	</main>
+
+	<!-- <footer class="inline-flex">
+		<img src="https://img.icons8.com/cotton/64/000000/twitter.png"/>
+	</footer> -->
 
 
 </body>

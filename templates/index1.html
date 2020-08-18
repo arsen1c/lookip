@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{ title }}</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1s">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container-fluid">
+		<nav class="row justify-content-center" style="background: #337ab7; color: white;">
+			<h1 class="col-md-4 text-center">IP Lookup</h1>
+		</nav>	
+	</div>
+	<div class="container pt-3">
+		<form method="post" class='col-md-6 col-md-offset-4'>
+			<div class='input-group'>
+				<input type="text" class='form-control' name="ip" placeholder="Ip Address">
+				<div class='input-group-btn'>
+					<button class='btn btn-primary ml-2' type="submit">
+						Submit
+					</button>
+				</div>
+			</div>		
+		</form>
+	</div>
+
+	<div class='container'>
+		{% if data.ip and data.country %}
+		<div class='col-md-8 col-md-offset-3' style=>
+			{% if request.method == 'GET' %}
+				<h3>Your Address: {{ data.ip }}</h3>
+			{% else %}
+				<h3>IP Address: {{ data.ip }}</h3>
+			{% endif %}
+
+			
+			<!-- <img style="display: block"src="https://www.countryflags.io/at/flat/64.png"> -->
+			<h5 style="display: inline"><b>Country:</b> {{ data.country }}</h5> 
+			<img src="https://www.countryflags.io/{{ data.country }}/flat/48.png">
+			<h5><b>Region</b>: {{ data.region }}</h5>
+			<h5><b>City</b>: {{ data.city }}</h5>
+			<h5><b>Organization:</b> {{ data.org }}</h5>
+			<h5><b>Hostname:</b> {{ response.hostname }}</h5>
+			<h5><b>TimeZone:</b> {{ data.timezone }}</h5>
+		</div>
+		{% endif %}	
+		<br>
+		<div class="col-sm-4 col-md-offset-3 embed-responsive embed-responsive-1by1">
+			<iframe 
+			src="https://www.google.com/maps/embed/v1/place?key={{ config.google_key }}&q={{ data.loc }}" allowfullscreen>
+			</iframe>
+		</div>	
+	</div>
+
+
+</body>
+</html>

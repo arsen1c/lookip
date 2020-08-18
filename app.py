@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, flash, request, render_template
 import urllib.request, json, os
 from dotenv import load_dotenv
 
@@ -13,11 +13,18 @@ app = Flask(__name__)
 
 @app.route('/', methods=['POST', 'GET'])
 def ip():
+	error = None
 	if request.method == 'POST':
-		ip = request.form['ip']
-		url = f'https://ipinfo.io/{ip}/?token={config["api_key"]}'
+		try:
+			ip = request.form['ip']
+			url = f'https://ipinfo.io/{ip.strip()}/?token={config["api_key"]}'
+		except Exception as e:
+			error = e
 	else:
-		url = f'https://ipinfo.io/?token={config["api_key"]}'
+		try:
+			url = f'https://ipinfo.io/?token={config["api_key"]}'
+		except Exception as e:
+			error = e
 
 	source = urllib.request.urlopen(url)
 	response = json.load(source)
@@ -27,7 +34,7 @@ def ip():
 
 	data = {
 		"city": str(response['city']),
-		"hostname": str(response['hostname']),
+		# "hostname": str(response['hostname']),
 		"ip": str(response['ip']),
 		"loc": str(response['loc']),
 		"postal": str(response['postal']),
@@ -38,9 +45,9 @@ def ip():
 		# "org": str(response['org']),
 
 	}
-
-	return render_template('index.html', data=data, request=request, config=config)
+	print(f"VISITORS IP ADDRESSS: {request.remote_addr}")
+	return render_template('index.html', error=error, response=response, data=data, request=request, config=config)
 
 
 if __name__ == '__main__':
-	app.run(debug=True)
+	app.run(host="192.168.1.105", debug=True)
