@@ -28,13 +28,20 @@ def ip():
 
 	source = urllib.request.urlopen(url)
 	response = json.load(source)
-
-	split = response['org'].split()
-	org = " ".join(split[1:])
+        
+        if "org" in response:
+	    split = response['org'].split()
+    	    org = " ".join(split[1:])
+        else: 
+            org = "N/A"
+        if "hostname" in response:
+            hostname = str(response['hostname'])
+        else:
+            hostname = "N/A"
 
 	data = {
 		"city": str(response['city']),
-		# "hostname": str(response['hostname']),
+		"hostname": hostname,
 		"ip": str(response['ip']),
 		"loc": str(response['loc']),
 		"postal": str(response['postal']),
