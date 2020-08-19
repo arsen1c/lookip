@@ -24,7 +24,7 @@
 		</div>
 		
 		<div class="col-span-2 lg:mr-10">
-			<div class="lg:flex justify- bg-white p-4 shadow rounded-md w-full text-ls hover:shadow-lg lg:pb-20 text-xl">
+			<div class="lg:flex justify- bg-white p-4 shadow rounded-md w-full text-ls hover:shadow-lg lg:pb-20 lg:text-xl md:text-lg">
 				{% if data.ip and data.country %}
 				<div class="w-full"> 		
 					{% if request.method == 'GET' %}
@@ -32,7 +32,7 @@
 					{% else %}
 						<span>Ip Address: {{ data.ip }}</span>
 					{% endif %}
-					<span class="block leading-10">Country: {{ data.country }} </span>
+					<span class="block leading-10">Country: {{ data.country }}<img class="ml-2 inline" src="https://www.countryflags.io/{{ data.country }}/flat/48.png"> </span>
 					<span class="block leading-10">Region: {{ data.region }}</span>
 					<span class="block leading-10">City: {{ data.city }}</span>
 					<span class="block leading-10">Organization: {{ data.org }}</span>
