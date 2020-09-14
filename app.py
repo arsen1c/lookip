@@ -52,7 +52,6 @@ def ip():
 		# "org": str(response['org']),
 
 	}
-	print(f"VISITORS IP ADDRESSS: {request.remote_addr}")
 	return render_template('index.html', error=error, response=response, data=data, request=request, config=config)
 
 
